@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  remote_user: vagrant
+  become: yes
+
+  tasks:
+    - name: adds php7 repository
+      apt_repository: repo='ppa:ondrej/php' state=present
+
+    - name: ensure php5 is uninstalled
+      apt: name=php5 state=absent
+
+    - name: ensure php5-common is uninstalled
+      apt: name=php5-common state=absent
+
+    - name: ensure php7 is installed
+      apt: name=php7.0 state=latest
+
+    - name: ensure phpunit is installed
+      get_url: url=https://phar.phpunit.de/phpunit.phar dest=/usr/local/bin/phpunit mode=0775
